@@ -22,42 +22,78 @@
       }
 
       #year_input {
-        clear:both;
+        clear: both;
+        margin-top: 20px;
       }
 
-      .rank_color {
-        width: 20px;
-        margin-top: 2px;
+      .year-option {
+        display: block;
+        padding: 8px;
+        border: 1px solid #ccc;
+        background-color: #f0f0f0;
+        margin-bottom: 2px;
+        cursor: pointer;
       }
 
-      /* Step 2: Your CSS code goes here */
-      
-      /* Step 3: Your CSS code goes here */
+      .ui-selected {
+        background: #f39814 !important;
+        color: white;
+        font-weight: bold;
+      }
 
-      /* Step 4: Your CSS code goes here */
-      
+      #color_input {
+        clear: both;
+        margin-top: 20px;
+      }
+
+      #sortable_colors {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      #sortable_colors li {
+        margin: 5px;
+        padding: 5px;
+        border: 1px solid #ccc;
+        background-color: #f9f9f9;
+        cursor: move;
+      }
+
+      input[title], label[title] {
+        border-bottom: 1px dotted #333;
+        cursor: help;
+      }
+
     </style>
     
     <script>
     $(document).ready(function() {
-      
-      /* Step 1: Your js code goes here */
+      // Step 1: Date Picker
       $("#date").datepicker();
-      
-      /* Step 2: Your js code goes here */
-      $("#selectable").selectable();
-      $(".ui-widget-content")
 
-      /* Step 3: Your js code goes here */
+      // Step 2: Selectable Year (Undergrad/Grad)
+      $("#year_input").selectable({
+        filter: ".year-option",
+        selected: function (event, ui) {
+          const selectedValue = $(ui.selected).data("value");
+          $("#selected_year").val(selectedValue);
+        }
+      });
 
-      /* Step 4: Your js code goes here */
+      // Step 3: Sortable Colors
+      $("#sortable_colors").sortable();
+      $("#sortable_colors").disableSelection();
 
+      // Step 4: Tooltip
+      $(document).tooltip();
     });
     </script>
   </head>
   <body>
     <h2>jQuery UI-Survey</h2>
     <h3>General Information</h3>
+
     <div id="name_input">
       <label for="name">Name:</label>
       <input type="text" id="name" />
@@ -67,39 +103,39 @@
       <input type="text" id="date" />
     </div>
     <div id="year_input">
-	<h3>Are you enrolled as an undergraduate or a graduate?</h3>
-      <input type="radio" name="enroll_year" id="ugrad" value="ugrad"> 
-      <label for="ugrad">Undergraduate (taking 6.813, doesn't have to do RS assignments)</label>
-      <input type="radio" name="enroll_year" id="grad" value="grad"> 
-      <label for="grad">Graduate (taking 6.831, required to do RS assignments)</label>
+      <h3>Are you enrolled as an undergraduate or a graduate?</h3>
+      <div class="year-option" data-value="ugrad" title="Taking 6.813, doesn't have to do RS assignments">
+        Undergraduate (taking 6.813, doesn't have to do RS assignments)
+      </div>
+      <div class="year-option" data-value="grad" title="Taking 6.831, required to do RS assignments">
+        Graduate (taking 6.831, required to do RS assignments)
+      </div>
 
-      <!-- Step 2: Your HTML here -->
-       <ol id="selectable">
-        <li class="ui-widget-content">Undergraduate</li>
-        <li class="ui-widget-content">Postgraduate</li>
-       </ol>
+      <!-- Hidden field to track selected value -->
+      <input type="hidden" id="selected_year" name="enroll_year" />
     </div>
 
     <div id="color_input">
-      <!-- Comment out instruction when you finish step 3 -->
-      <h3>Rank the colors listed from your most favorite (1) to your least favorite (5). Be sure to only use each ranking once.</h3>
-      
-      <input type="text" class="rank_color" id="red" />
-      <label for="red">#ff0000</label><br/>
-      <input type="text" class="rank_color" id="blue" />
-      <label for="blue">#0000ff</label><br/>
-      <input type="text" class="rank_color" id="hot_pink" />
-      <label for="hot_pink">#ff00b3</label><br/>
-      <input type="text" class="rank_color" id="mustard" />
-      <label for="mustard">#ded447</label><br/>
-      <input type="text" class="rank_color" id="dark_green" />
-      <label for="dark_green">#125e18</label><br/>
+  <h3>Rank the colors listed from your most favorite to your least favorite:</h3>
+  <ul id="sortable_colors">
+    <li title="#ff0000">
+      <input type="text" value="#ff0000" readonly />
+    </li>
+    <li title="#0000ff">
+      <input type="text" value="#0000ff" readonly />
+    </li>
+    <li title="#ff00b3">
+      <input type="text" value="#ff00b3" readonly />
+    </li>
+    <li title="#ded447">
+      <input type="text" value="#ded447" readonly />
+    </li>
+    <li title="#125e18">
+      <input type="text" value="#125e18" readonly />
+    </li>
+  </ul>
+</div>
 
-      <!-- Step 3: Your HTML here -->
-      <!-- Uncomment instruction when you finish step 3 -->
-      <!--<h3>Rank the colors listed from your most favorite to your least favorite:</h3>-->
-      
-    </div>
 
   </body>
 </html>
